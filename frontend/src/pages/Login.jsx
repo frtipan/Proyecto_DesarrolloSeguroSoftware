@@ -36,7 +36,7 @@ export default function Login() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h1>SecureFrame</h1>
+        <h1>Galería Segura</h1>
 
         <input
           type="text"

@@ -1,15 +1,41 @@
 const fs = require("fs");
+const path = require("path");
+const sharp = require("sharp");
+const { fileTypeFromFile } = require("file-type");
+const detectarStego = require("../utils/stegoDetector");
 
-exports.analyze = (file) => {
-    const buffer = fs.readFileSync(file);
+async function analizarImagen(filePath) {
+  const type = await fileTypeFromFile(filePath);
 
-    let count = 0;
+  if (!type || !["image/jpeg", "image/png", "image/webp"].includes(type.mime)) {
+    throw new Error("Formato de imagen inválido");
+  }
 
-    for (let i = 0; i < buffer.length; i++) {
-        if (buffer[i] % 2 === 1) count++;
-    }
+  return detectarStego(filePath);
+}
 
-    const ratio = count / buffer.length;
+async function limpiarImagen(filename) {
+  const uploadsDir = path.join(__dirname, "../../uploads");
 
-    return ratio > 0.55 ? "SUSPICIOUS" : "CLEAN";
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+
+  const originalPath = path.join(uploadsDir, filename);
+
+  const cleanName = "clean-" + Date.now() + ".jpg";
+  const cleanPath = path.join(uploadsDir, cleanName);
+
+  await sharp(originalPath)
+    .jpeg({ quality: 95 })
+    .toFile(cleanPath);
+
+  fs.unlinkSync(originalPath);
+
+  return cleanName;
+}
+
+module.exports = {
+  analizarImagen,
+  limpiarImagen,
 };

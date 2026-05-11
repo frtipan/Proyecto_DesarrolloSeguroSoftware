@@ -21,7 +21,7 @@ export default function Navbar() {
   if (!token) {
     return (
       <nav className="menu">
-        <div className="logo">SecureFrame</div>
+        <div className="logo">Galeria Segura</div>
 
         <div className="menu-links">
           <Link to="/">Iniciar sesión</Link>
@@ -32,13 +32,13 @@ export default function Navbar() {
 
   return (
     <nav className="menu">
-      <div className="logo">SecureFrame</div>
+      <div className="logo">Galeria Segura</div>
 
       <div className="menu-links">
-        <Link to="/dashboard">Galería</Link>
+        <Link to="/dashboard">Galería/Álbums</Link>
 
         {role !== "admin" && (
-          <Link to="/upload">Subir imagen</Link>
+          <Link to="/upload">Subir Álbums</Link>
         )}
 
         {role === "admin" && (

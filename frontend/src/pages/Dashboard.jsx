@@ -10,7 +10,7 @@ export default function Dashboard() {
         "http://localhost:3000/images/gallery"
       );
 
-      setImages(res.data);
+      setImages(res.data || []);
     } catch (err) {
       console.log(err);
     }
@@ -22,36 +22,27 @@ export default function Dashboard() {
 
   return (
     <div className="container">
-      <h1>Galería SecureFrame</h1>
+      <h1>Galería pública</h1>
 
-      <div className="gallery">
-        {images.length === 0 && (
-          <p>No hay imágenes aprobadas</p>
-        )}
+      {images.length === 0 ? (
+        <p>No hay imágenes aprobadas</p>
+      ) : (
+        <div className="gallery">
+          {images.map((img) => (
+            <div className="card" key={img.id}>
+              <img
+                src={`http://localhost:3000/uploads/${img.filename}`}
+                alt={img.album_title}
+              />
 
-        {images.map((img) => (
-          <div className="card" key={img.id}>
-            <img
-              src={`http://localhost:3000/uploads/${img.filename}`}
-              alt=""
-            />
-
-            <div className="info">
-              <p>
-                <strong>Estado:</strong> {img.status}
-              </p>
-
-              <p>
-                <strong>Análisis:</strong> {img.analysis}
-              </p>
-
-              <p>
-                <strong>Motivo:</strong> {img.reason}
-              </p>
+<div className="info">
+  <h3>Álbum: {img.album_title}</h3>
+  <p>Descripción: {img.description}</p>
+</div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

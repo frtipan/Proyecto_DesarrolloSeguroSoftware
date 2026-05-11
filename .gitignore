@@ -1,0 +1,10 @@
+**/node_modules
+
+uploads
+quarantine
+
+.env
+backend/.env
+
+dist
+build

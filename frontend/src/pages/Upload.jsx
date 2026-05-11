@@ -9,27 +9,22 @@ export default function Upload() {
 
   const userId = localStorage.getItem("userId");
 
-  const enviarSolicitud = async () => {
-    if (!title || !description) {
-      return alert("Completa título y descripción");
+  const upload = async () => {
+    if (!title || !description || !file) {
+      return alert("Completa todos los campos");
     }
 
-    if (!file) {
-      return alert("Selecciona una imagen");
+    if (!userId) {
+      return alert("Debes iniciar sesión");
     }
 
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:3000/albums/create", {
-        title,
-        description,
-        privacy: "publico",
-        userId
-      });
-
       const formData = new FormData();
       formData.append("image", file);
+      formData.append("title", title);
+      formData.append("description", description);
       formData.append("userId", userId);
 
       const res = await axios.post(
@@ -37,67 +32,65 @@ export default function Upload() {
         formData
       );
 
-      setLoading(false);
-
-      if (res.data.status === "SOSPECHOSO") {
-        alert("Imagen sospechosa enviada a cuarentena");
-      } else {
-        alert("Imagen subida sin novedades");
-      }
+      alert(res.data.message);
 
       setTitle("");
       setDescription("");
       setFile(null);
 
-      document.getElementById("archivo").value = "";
+      const input = document.getElementById("fileInput");
+      if (input) input.value = "";
 
     } catch (err) {
+      console.log(err);
+
+      alert(
+        err.response?.data?.error ||
+        "Error subiendo imagen"
+      );
+    } finally {
       setLoading(false);
-      alert(err.response?.data?.error || "Error procesando solicitud");
     }
   };
 
   return (
-    <div className="container">
-      <h1>SecureFrame</h1>
+    <div className="page">
+      <div className="upload-wrapper">
+        <h1 className="page-title">Galeria Segura</h1>
 
-      <div className="card">
-        <h2>Solicitar creación de álbum</h2>
+        <div className="upload-card">
+          <h2>Subir Album</h2>
 
-        <input
-          placeholder="Título del álbum"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+          <input
+            className="input"
+            placeholder="Nombre del álbum"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
 
-        <textarea
-          placeholder="Descripción"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginTop: "10px"
-          }}
-        />
+          <textarea
+            className="input textarea"
+            placeholder="Descripción"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
 
-        <input
-          id="archivo"
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
-          style={{ marginTop: "10px" }}
-        />
+          <input
+            id="fileInput"
+            className="input"
+            type="file"
+            accept="image/*"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
 
-        <button
-          onClick={enviarSolicitud}
-          disabled={loading}
-          style={{ marginTop: "12px" }}
-        >
-          {loading
-            ? "Analizando imagen..."
-            : "Enviar solicitud y analizar imagen"}
-        </button>
+          <button
+            className="btn-primary"
+            onClick={upload}
+            disabled={loading}
+          >
+            {loading ? "Analizando..." : "Subir"}
+          </button>
+        </div>
       </div>
     </div>
   );
