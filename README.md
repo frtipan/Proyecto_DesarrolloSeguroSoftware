@@ -188,17 +188,7 @@ El sistema utiliza las siguientes tablas:
 - users
 - albums
 - images
-
----
-
-# Relaciones
-
-- Un usuario puede tener múltiples álbumes.
-- Un álbum puede contener múltiples imágenes.
-- Las imágenes pueden encontrarse:
-  - APPROVED
-  - QUARANTINE
-
+  
 ---
 
 # Estados Implementados
