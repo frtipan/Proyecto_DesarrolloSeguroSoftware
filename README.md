@@ -188,31 +188,7 @@ El sistema utiliza las siguientes tablas:
 - users
 - albums
 - images
-
----
-
-# Relaciones
-
-- Un usuario puede tener múltiples álbumes.
-- Un álbum puede contener múltiples imágenes.
-- Las imágenes pueden encontrarse:
-  - APPROVED
-  - QUARANTINE
-
----
-
-# Estados Implementados
-
-## Albums
-
-- PENDING
-- APPROVED
-
-## Images
-
-- APPROVED
-- QUARANTINE
-
+  
 ---
 
 # Credenciales de Prueba
@@ -379,7 +355,7 @@ Antes de almacenar una imagen, el sistema realiza:
 
 ---
 
-# Autor
+# Autores
 
 Fernando Tipán, Kevin Asmal
 
