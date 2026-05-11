@@ -191,20 +191,6 @@ El sistema utiliza las siguientes tablas:
   
 ---
 
-# Estados Implementados
-
-## Albums
-
-- PENDING
-- APPROVED
-
-## Images
-
-- APPROVED
-- QUARANTINE
-
----
-
 # Credenciales de Prueba
 
 ## Usuario Demo
@@ -369,7 +355,7 @@ Antes de almacenar una imagen, el sistema realiza:
 
 ---
 
-# Autor
+# Autores
 
 Fernando Tipán, Kevin Asmal
 
