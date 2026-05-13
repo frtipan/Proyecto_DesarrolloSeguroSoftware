@@ -8,6 +8,7 @@ Proyecto desarrollado para la materia:
 Universidad de las Fuerzas Armadas ESPE
 
 ---
+Integrantes: Asmal Kevin //  Tipan Fernando
 
 # Tecnologías Utilizadas
 
